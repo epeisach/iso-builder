@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-20.04
     container:
       image: debian:latest
-      options: --privileged 0it
+      options: --privileged -it
 
     steps:
     - uses: actions/checkout@v2
