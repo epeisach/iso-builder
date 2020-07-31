@@ -21,14 +21,21 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install debootstrap
-      run: sudo apt update && sudo apt install debootstrap -y
+    - name: Install debootstrap/git
+      run: apt update && apt install git debootstrap -y
         
+    - name: Copy debootstrap scripts to distro
+      run: |
+        cd /usr/share/debootstrap/scripts
+        cp disco focal
+    
     - name: Begin live-build preparation/build, install base dependencies
       run: |
-        cd /home/runner/work/iso-builder/iso-builder
-        sudo ./build.sh
+        cd /
+        git clone https://github.com/Ubuntu-Cinnamon-Remix/iso-builder -b cinnamonv2
+        cd iso-builder
+        ./build.sh
     
     - name: Terraform ISO by installing our UCR packages
       run: |
-        sudo ./terraform.sh
+        ./terraform.sh
